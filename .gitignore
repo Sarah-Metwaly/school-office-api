@@ -7,3 +7,4 @@ src/generated/
 coverage/
 *.log
 LOCAL_SETUP.md
+deliverables/
