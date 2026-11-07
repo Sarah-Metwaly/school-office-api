@@ -2,6 +2,8 @@
 
 A focused backend demo for Credosis Phase 02: student records and fee tracking with staff permissions. TypeScript, Express 5, PostgreSQL, Prisma 7, Zod, Vitest/Supertest, and Swagger UI. No actual money moves.
 
+Source: [Sarah-Metwaly/school-office-api](https://github.com/Sarah-Metwaly/school-office-api). The [video narration transcript](docs/VIDEO_TRANSCRIPT.md) explains the demo's workflow and transaction safeguards.
+
 ## Run from a clean checkout
 
 Prerequisites: Node.js **22.12+ within 22.x**, or Node.js 24 LTS; npm; Docker Desktop running. Node 22.18.0 was used for verification. Prisma 7 uses the PostgreSQL driver adapter. The lockfile pins the tested dependency versions.
