@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  READ_ONLY
+}
+
+model StaffUser {
+  id           String      @id @default(uuid()) @db.Uuid
+  email        String      @unique
+  passwordHash String
+  role         Role
+  createdAt    DateTime    @default(now()) @db.Timestamptz(3)
+  charges      FeeCharge[]
+  payments     Payment[]
+}
+
+model Student {
+  id        String      @id @default(uuid()) @db.Uuid
+  fullName  String      @db.VarChar(100)
+  grade     String      @db.VarChar(30)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  charges   FeeCharge[]
+  payments  Payment[]
+}
+
+model FeeCharge {
+  id          String    @id @default(uuid()) @db.Uuid
+  studentId   String    @db.Uuid
+  amountMinor Int
+  description String    @db.VarChar(200)
+  createdById String    @db.Uuid
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3)
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  createdBy   StaffUser @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  @@index([studentId, createdAt])
+}
+
+model Payment {
+  id          String    @id @default(uuid()) @db.Uuid
+  studentId   String    @db.Uuid
+  amountMinor Int
+  reference   String    @unique @db.VarChar(80)
+  createdById String    @db.Uuid
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3)
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  createdBy   StaffUser @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  @@index([studentId, createdAt])
+}
